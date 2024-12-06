@@ -48,7 +48,6 @@ struct BlockChain {
 */
 int BlockChainGetSize(const BlockChain& blockChain);
 
-
 /**
  * BlockChainPersonalBalance - returns the balance of a given person, relative to a given BlockChain
  *

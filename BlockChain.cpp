@@ -20,7 +20,7 @@ int BlockChainGetSize(const BlockChain& blockChain){
             current=current->next;
         }
 return counter;
-};
+}
 
 
 /**
@@ -33,14 +33,14 @@ return counter;
 */
 int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     Block *curr;
-    int balance,received,spent=0;
+    int balance=0,received=0,spent=0;
     curr=blockChain.Head;
     while( curr!=nullptr){
         if (curr->transaction.sender==name)
         {
             spent=spent+curr->transaction.value;
         }
-        if(curr->transaction.sender==name){
+        if(curr->transaction.receiver==name){
             received=received+curr->transaction.value;
 
         }
@@ -50,13 +50,6 @@ int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     return balance;
 }
 
-void AddBlock(){
-
-
-
-
-
-}
 /**
  * BlockChainAppendTransaction - creates and appends a new transaction to the BlockChain
  *
@@ -75,9 +68,18 @@ void BlockChainAppendTransaction(
 ){
     Transaction  transaction={value,sender,receiver};
     Block *newBlock= new Block(transaction,timestamp);
-    newBlock->next=blockChain.Head;
-    blockChain.Head=newBlock;
-}
+    if (blockChain.Head==nullptr){
+        blockChain.Head=newBlock;
+    }
+    else{
+        Block *curr=blockChain.Head;
+        while(curr->next!=nullptr)
+        {
+            curr=curr->next;
+        }
+        curr->next=newBlock;
+    
+    }}
 
 
 /**
@@ -92,9 +94,19 @@ void BlockChainAppendTransaction(
         const Transaction& transaction,
         const string& timestamp
 ){
-    Block *newBlock= new Block(transaction,timestamp);
-    newBlock->next=blockChain.Head;
-    blockChain.Head=newBlock;
+   Block *newBlock= new Block(transaction,timestamp);
+    if (blockChain.Head==nullptr){
+        blockChain.Head=newBlock;
+    }
+    else{
+        Block *curr=blockChain.Head;
+        while(curr->next!=nullptr)
+        {
+            curr=curr->next;
+        }
+        curr->next=newBlock;
+    
+    }
 }
 
 
@@ -108,7 +120,7 @@ void BlockChainAppendTransaction(
 */
 BlockChain BlockChainLoad(ifstream& file){
 
-BlockChain new_BlockChain;
+BlockChain *new_BlockChain=new BlockChain;
  string sender, receiver, timestamp;
  unsigned int value;
  Transaction transaction;
@@ -116,9 +128,9 @@ BlockChain new_BlockChain;
         transaction.sender = sender;
         transaction.receiver = receiver;
         transaction.value = value;
-        BlockChainAppendTransaction(new_BlockChain,transaction,timestamp);
+        BlockChainAppendTransaction(*new_BlockChain,transaction,timestamp);
   }
-  return new_BlockChain;
+  return *new_BlockChain;
 
 }
 
@@ -236,7 +248,8 @@ void BlockChainCompress(BlockChain& blockChain){
                 delete iterator;
                 iterator = current->next;
             } else {
-                break;
+                delete iterator;
+                iterator = iterator->next;
             }
         }
         current->time = timestamp;
