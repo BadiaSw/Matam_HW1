@@ -16,11 +16,11 @@ To make things a bit more fun, each TA added a link to song/video we would like 
 
 Tell us a bit about yourselves! 
 
-	- First student's name:
-	- Favorite singer:
-	- Favorite song:
-	- Desirable grade in Matam:
-	- which TA's song you liked the most:
+	- First student's name:Badia
+	- Favorite singer:Kendrick Lamar
+	- Favorite song:the scientist
+	- Desirable grade in Matam:100
+	- which TA's song you liked the most:Baraa
 
 	- Second student's name:
 	- Favorite singer:
