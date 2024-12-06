@@ -26,48 +26,28 @@ int main(int argc, char *argv[]) {
     }
 
     ifstream source(sourceFile);
-    if (!source.is_open()) {
-        cout << "Error failed to open the sourceFile , verification failed!" << endl;
-        return 0;
-    }
     BlockChain blockChain = BlockChainLoad(source);
 
     if (Operator == "format") {
         ofstream target(targetFile);
-        if (!target.is_open()) {
-            cout << "Error: Could not open targetFile " << endl;
-            return 0;
-        }
         BlockChainDump(blockChain, target);
         target.close();
 
     } else {
         if (Operator == "hash") {
             ofstream target(targetFile);
-            if (!target.is_open()) {
-                cout << "Error: Could not open targetFile " << endl;
-                return 0;
-            }
             BlockChainDumpHashed(blockChain, target);
             target.close();
 
         } else {
             if (Operator == "compress") {
                 ofstream target(targetFile);
-                if (!target.is_open()) {
-                    cout << "Error: Could not open targetFile " << endl;
-                    return 0;
-                }
                 BlockChainCompress(blockChain);
                 BlockChainDump(blockChain, target);
                 target.close();
             } else {
                 if (Operator == "verify") {
                     ifstream inputTarget(targetFile);
-                    if (!inputTarget.is_open()) {
-                        cout << "Error: Could not open targetFile " << endl;
-                        return 0;
-                    }
                     if (BlockChainVerifyFile(blockChain, inputTarget)) {
                         cout << "Verification passed" << endl;
                     } else {
