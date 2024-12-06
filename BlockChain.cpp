@@ -120,7 +120,7 @@ void BlockChainAppendTransaction(
 */
 BlockChain BlockChainLoad(ifstream& file){
 
-BlockChain *new_BlockChain=new BlockChain;
+BlockChain new_BlockChain;
  string sender, receiver, timestamp;
  unsigned int value;
  Transaction transaction;
@@ -128,9 +128,9 @@ BlockChain *new_BlockChain=new BlockChain;
         transaction.sender = sender;
         transaction.receiver = receiver;
         transaction.value = value;
-        BlockChainAppendTransaction(*new_BlockChain,transaction,timestamp);
+        BlockChainAppendTransaction(new_BlockChain,transaction,timestamp);
   }
-  return *new_BlockChain;
+  return new_BlockChain;
 
 }
 
