@@ -1,6 +1,5 @@
 
 #pragma once
-
 #include <string>
 #include <fstream>
 
@@ -47,9 +46,7 @@ struct BlockChain {
  *
  * @return Number of Blocks in the BlockChain
 */
-int BlockChainGetSize(const BlockChain& blockChain){
-       
-};
+int BlockChainGetSize(const BlockChain& blockChain);
 
 
 /**
