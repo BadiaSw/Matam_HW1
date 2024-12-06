@@ -13,6 +13,20 @@ using std::ofstream;
 
 typedef unsigned int (*updateFunction)(unsigned int);
 
+struct Block
+{
+        Transaction transaction;
+        string time;
+        Block *next;   
+        Block(const Transaction transaction, const string timestamp){
+             this->transaction=transaction;
+             this->time=timestamp;
+             this->next=nullptr;
+
+}
+};
+// Constructor
+
 
 /**
 *
@@ -21,6 +35,8 @@ typedef unsigned int (*updateFunction)(unsigned int);
 */
 struct BlockChain {
     // You may add any fields you believe are necessary
+    Block *Head;
+   
 };
 
 
@@ -31,7 +47,9 @@ struct BlockChain {
  *
  * @return Number of Blocks in the BlockChain
 */
-int BlockChainGetSize(const BlockChain& blockChain);
+int BlockChainGetSize(const BlockChain& blockChain){
+       
+};
 
 
 /**
@@ -157,3 +175,4 @@ void BlockChainCompress(BlockChain& blockChain);
  * @param function a pointer to a transform function
 */
 void BlockChainTransform(BlockChain& blockChain, updateFunction function);
+void deleteBlockChain(BlockChain blockChain);
