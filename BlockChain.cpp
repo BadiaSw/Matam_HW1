@@ -68,18 +68,9 @@ void BlockChainAppendTransaction(
 ){
     Transaction  transaction={value,sender,receiver};
     Block *newBlock= new Block(transaction,timestamp);
-    if (blockChain.Head==nullptr){
-        blockChain.Head=newBlock;
+    newBlock->next=blockChain.Head;
+    blockChain.Head=newBlock;
     }
-    else{
-        Block *curr=blockChain.Head;
-        while(curr->next!=nullptr)
-        {
-            curr=curr->next;
-        }
-        curr->next=newBlock;
-    
-    }}
 
 
 /**
@@ -94,19 +85,9 @@ void BlockChainAppendTransaction(
         const Transaction& transaction,
         const string& timestamp
 ){
-   Block *newBlock= new Block(transaction,timestamp);
-    if (blockChain.Head==nullptr){
-        blockChain.Head=newBlock;
-    }
-    else{
-        Block *curr=blockChain.Head;
-        while(curr->next!=nullptr)
-        {
-            curr=curr->next;
-        }
-        curr->next=newBlock;
-    
-    }
+    Block *newBlock= new Block(transaction,timestamp);
+    newBlock->next=blockChain.Head;
+    blockChain.Head=newBlock;
 }
 
 
@@ -119,8 +100,8 @@ void BlockChainAppendTransaction(
  *
 */
 BlockChain BlockChainLoad(ifstream& file){
-
-BlockChain new_BlockChain;
+string time;
+BlockChain newBlockChain = {nullptr};
  string sender, receiver, timestamp;
  unsigned int value;
  Transaction transaction;
@@ -128,11 +109,28 @@ BlockChain new_BlockChain;
         transaction.sender = sender;
         transaction.receiver = receiver;
         transaction.value = value;
-        BlockChainAppendTransaction(new_BlockChain,transaction,timestamp);
+        time=timestamp;
+        newBlockChain=addBlock(newBlockChain,transaction,time);
   }
-  return new_BlockChain;
+  return newBlockChain;
 
 }
+BlockChain addBlock(BlockChain blockChain,
+         Transaction& transaction,
+         string& timestamp){
+    Block *new_Block = new Block(transaction, timestamp);
+    if (blockChain.Head == nullptr) {
+        blockChain.Head = new_Block;
+    } else {
+        Block *current = blockChain.Head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = new_Block;
+    }
+    return blockChain;
+}
+
 
 
 /**
@@ -248,7 +246,7 @@ void BlockChainCompress(BlockChain& blockChain){
                 delete iterator;
                 iterator = current->next;
             } else {
-                delete iterator;
+                
                 iterator = iterator->next;
             }
         }

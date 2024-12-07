@@ -37,7 +37,11 @@ struct BlockChain {
     Block *Head;
    
 };
-
+BlockChain addBlock(BlockChain blockChain,
+         Transaction& transaction,
+         string& timestamp);
+void createBlock(const Transaction& transaction,
+        const string& timestamp);
 
 /**
  * BlockChainGetSize - returns the number of Blocks in the BlockChain
