@@ -236,8 +236,8 @@ void BlockChainCompress(BlockChain& blockChain){
     string timestamp;
     while (current != nullptr) {
         Block *iterator = current->next;
-        timestamp = current->time;
-
+         timestamp = current->time;
+ 
         while (iterator != nullptr) {
             if (iterator->transaction.sender == current->transaction.sender &&
                 iterator->transaction.receiver == current->transaction.receiver) {
@@ -246,12 +246,12 @@ void BlockChainCompress(BlockChain& blockChain){
                 delete iterator;
                 iterator = current->next;
             } else {
-                
-                iterator = iterator->next;
+                 break;       
+                 
             }
         }
         current->time = timestamp;
-        current = current->next;
+         current = current->next;
     }
 
 
